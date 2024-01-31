@@ -54,6 +54,17 @@ app.post('/notes/api', (req, res) => {
     res.json(dbJson);
   });
 
+  app.delete('/notes/api/:id', (req, res) => {
+    let data = fs.readFileSync("db/db.json", "utf8");
+    const dataJSON =  JSON.parse(data);
+    const newNotes = dataJSON.filter((note) => { 
+      return note.id !== req.params.id;
+    });
+    fs.writeFileSync("db/db.json",JSON.stringify(newNotes));
+    res.json("Note deleted.");
+  });
+  
+
 app.listen(PORT, () =>
   console.log(`Example app listening at http://localhost:${PORT}`)
 );

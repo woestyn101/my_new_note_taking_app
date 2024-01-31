@@ -6,11 +6,13 @@ var userText = document.getElementById("text");
 var saveBtn = document.getElementById("postbutton");
 var clearBtn = document.getElementById("clearbutton");
 var newBtn = document.getElementById("newbutton");
+var delBtn = document.getElementById("deletebutton");
 
 // setting buttons to hide
 saveBtn.style.display = "none";
 clearBtn.style.display = "none";
 newBtn.style.display = "none";
+delBtn.style.display = "none";
 
 // clear button click
 clearBtn.addEventListener("click", clearForm);
@@ -68,6 +70,13 @@ function newNote(){
     body: JSON.stringify(newNote),
   })
    
+  const deleteNote = (id) =>
+  fetch(`/notes/api/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
       
       // setting empty arrar for db.json data
       var textobject = [];
@@ -104,18 +113,37 @@ function newNote(){
         let titleIndex = textobject.findIndex(x => x == event.target.textContent);
        // getting text value from array
         userText.value = textobject[titleIndex + 1];
+        var noteId = textobject[titleIndex + 2];
+        console.log(noteId);
 
         //displaying new btn
         newBtn.style.display = "inline";
+        delBtn.style.display = "inline";
 
         //hiding new btn
         saveBtn.style.display = "none";
         clearBtn.style.display = "none";
 
         userTitle.setAttribute('readonly', true);
-        userText.setAttribute('readonly', true);
+        userText.setAttribute('readonly', true);     
+        delBtn.addEventListener('click', deletetheNote);
+
+       function deletetheNote(){
+        deleteNote(noteId);
+        alert("Note was delete! Refresh Page for new list!");
+        clearForm();
+       }
+       
         
-     }       
+        
+     }      
+
+    //  .then(data=>data.json()).then(responseData => {
+    //   divE.innerHTML = "";
+    //   responseData.forEach((information) => renderNotes(information))
+    // }).catch((err)=> console.log(err)); ;
+     
+    
 
       // getting notes from db.json and outputting to html
     getNotes().then((response) => response.forEach((item) => renderNotes(item)));
@@ -136,10 +164,12 @@ function newNote(){
         };
 
         console.log(userdata);
-        saveNote(userdata); 
-        alert('Your note was added, refresh page to see new note!')
-        userTitle.value = "";
-        userText.value = "";
+        saveNote(userdata).then(data=>data.json()).then(responseData => {
+          divE.innerHTML = "";
+          responseData.forEach((information) => renderNotes(information))
+        }).catch((err)=> console.log(err)); 
+       
+      
        
       }
 

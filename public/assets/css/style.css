@@ -53,7 +53,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-#clearbutton {
+#clearbutton, #deletebutton {
   height:fit-content;
   background-color: #b22222;
   border:white solid 0.1rem;
