@@ -11,7 +11,7 @@ const uuid = require('uuid');
 const { type } = require('os');
 
 // initializing unique id variable
-var uniqueID = uuid.v4();
+var uniqueID;
 
 // Initialize an instance of Express.js
 const app = express();
@@ -42,6 +42,7 @@ app.get('/notes/api', (req, res) => {
 
 app.post('/notes/api', (req, res) => {
     console.log(req.body.title);
+    uniqueID =  uuid.v4();
     const dbJson = JSON.parse(fs.readFileSync("db/db.json","utf8"));
     const newNote = {
       title: req.body.title,
@@ -61,6 +62,7 @@ app.post('/notes/api', (req, res) => {
     const newNotes = dataJSON.filter((note) => { 
       return note.id !== req.params.id;
     });
+    console.log(newNotes);
     fs.writeFileSync("db/db.json",JSON.stringify(newNotes));
     res.json("Note deleted.");
   });
