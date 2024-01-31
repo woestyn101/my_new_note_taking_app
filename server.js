@@ -55,6 +55,7 @@ app.post('/notes/api', (req, res) => {
   });
 
   app.delete('/notes/api/:id', (req, res) => {
+    console.log(req.params.id);
     let data = fs.readFileSync("db/db.json", "utf8");
     const dataJSON =  JSON.parse(data);
     const newNotes = dataJSON.filter((note) => { 

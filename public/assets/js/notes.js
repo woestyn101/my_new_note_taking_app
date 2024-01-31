@@ -21,6 +21,7 @@ clearBtn.addEventListener("click", clearForm);
 function clearForm(){
     userTitle.value = "";
     userText.value = "";
+    delBtn.style.display = "none";
     
 }
 
@@ -34,6 +35,7 @@ function newNote(){
     userTitle.value = "";
     userText.value = "";
      newBtn.style.display = "none";
+     delBtn.style.display = "none";
 }
 
 // adding eventlisteners to input fields
@@ -128,13 +130,14 @@ function newNote(){
         userText.setAttribute('readonly', true);     
         delBtn.addEventListener('click', deletetheNote);
 
-       function deletetheNote(){
-        deleteNote(noteId);
-        alert("Note was delete! Refresh Page for new list!");
-        clearForm();
-       }
        
         
+        function deletetheNote(){
+          deleteNote(noteId);
+          alert("note Deleted");
+        }
+            
+      
         
      }      
 
