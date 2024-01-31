@@ -134,7 +134,7 @@ function newNote(){
         
         function deletetheNote(){
           deleteNote(noteId);
-          alert("note Deleted");
+           goRenderNotes();
         }
             
       
@@ -175,4 +175,15 @@ function newNote(){
       
        
       }
+
+      const goRenderNotes = () => getNotes().then(responseData => {
+        divE.innerHTML = "";
+        clearForm();
+        responseData.forEach((information) => renderNotes(information))
+      }).catch((err)=> console.log(err)); 
+      
+
+      
+
+
 
