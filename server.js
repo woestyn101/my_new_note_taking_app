@@ -18,6 +18,9 @@ const app = express();
 // Specify on which port the Express.js server will run
 const PORT = process.env.PORT || 8080;
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Static middleware pointing to the public folder
 app.use(express.static('public'));
 
@@ -26,15 +29,30 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))
 });
 
+// setting route for notes.html
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'))
 });
 
-// setting route for notes.html
+// setting api for notes.html
 app.get('/notes/api', (req, res) => {
     const dbJson = JSON.parse(fs.readFileSync("db/db.json","utf8"));
     res.json(dbJson);
 });
+
+app.post('/notes/api', (req, res) => {
+    console.log(req.body.title);
+    const dbJson = JSON.parse(fs.readFileSync("db/db.json","utf8"));
+    const newNote = {
+      title: req.body.title,
+      text: req.body.text,
+      id: uniqueID
+    };
+    dbJson.push(newNote);
+    console.log(newNote);
+    fs.writeFileSync("db/db.json",JSON.stringify(dbJson));
+    res.json(dbJson);
+  });
 
 app.listen(PORT, () =>
   console.log(`Example app listening at http://localhost:${PORT}`)

@@ -66,7 +66,7 @@ function newNote(){
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newNote),
-  });
+  })
    
       
       // setting empty arrar for db.json data
@@ -127,7 +127,7 @@ function newNote(){
     // fuction to post new data to db.json
       function postData() {
         console.log (userTitle.value);
-        console.log (userPerson.value);
+        console.log (userText.value);
         // getting data from input fields
         var userdata = {
           title: userTitle.value,
@@ -135,9 +135,11 @@ function newNote(){
         
         };
 
-        console.log()
-        //saveNote(userdata); 
-       
+        console.log(userdata);
+        saveNote(userdata); 
+        alert('Your note was added, refresh page to see new note!')
+        userTitle.value = "";
+        userText.value = "";
        
       }
 
