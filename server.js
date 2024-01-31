@@ -6,9 +6,6 @@ const path = require('path');
 //import fs to read and write files
 const fs = require('fs');
 
-
-
-
 //importing uuid to create unique id's
 const uuid = require('uuid');
 const { type } = require('os');
@@ -29,10 +26,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))
 });
 
-// setting route for notes.html
 app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/notes.html'))
+});
+
+// setting route for notes.html
+app.get('/notes/api', (req, res) => {
     const dbJson = JSON.parse(fs.readFileSync("db/db.json","utf8"));
-  res.json(dbJson);
+    res.json(dbJson);
 });
 
 app.listen(PORT, () =>
