@@ -15,9 +15,9 @@ During this project I learned how to:
 - using fetch to get data.
 - using the post request to send data.
 
-## Link to website
+## Link to web app
 
-https://woestyn101.github.io/myweather_app/
+https://new-note-taker-c51069616412.herokuapp.com
 
 ## Installation (N/A)
 
