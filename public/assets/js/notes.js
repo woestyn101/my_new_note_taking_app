@@ -126,14 +126,22 @@ function newNote(){
         saveBtn.style.display = "none";
         clearBtn.style.display = "none";
 
+        // set input files to readonly
+
         userTitle.setAttribute('readonly', true);
         userText.setAttribute('readonly', true);     
+
+        // delete button with function
         delBtn.addEventListener('click', deletetheNote);
 
        
         
         function deletetheNote(){
+
+          // calling deleteNote function to send item to be deleted to server
           deleteNote(noteId);
+
+          //repopulate html with new data
            goRenderNotes();
         }
             
@@ -141,10 +149,7 @@ function newNote(){
         
      }      
 
-    //  .then(data=>data.json()).then(responseData => {
-    //   divE.innerHTML = "";
-    //   responseData.forEach((information) => renderNotes(information))
-    // }).catch((err)=> console.log(err)); ;
+    
      
     
 
@@ -157,8 +162,7 @@ function newNote(){
     
     // fuction to post new data to db.json
       function postData() {
-        console.log (userTitle.value);
-        console.log (userText.value);
+       
         // getting data from input fields
         var userdata = {
           title: userTitle.value,
@@ -166,7 +170,7 @@ function newNote(){
         
         };
 
-        console.log(userdata);
+        // save data and repopulate new data to html
         saveNote(userdata).then(data=>data.json()).then(responseData => {
           divE.innerHTML = "";
           responseData.forEach((information) => renderNotes(information))
@@ -175,6 +179,8 @@ function newNote(){
       
        
       }
+
+      // goRender function to get notes from api and repopulate html
 
       const goRenderNotes = () => getNotes().then(responseData => {
         divE.innerHTML = "";

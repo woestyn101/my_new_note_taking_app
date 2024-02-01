@@ -40,29 +40,38 @@ app.get('/notes/api', (req, res) => {
     res.json(dbJson);
 });
 
+// setting up api route
+
 app.post('/notes/api', (req, res) => {
-    console.log(req.body.title);
+    // gettting unique id
     uniqueID =  uuid.v4();
+    // getting json file
     const dbJson = JSON.parse(fs.readFileSync("db/db.json","utf8"));
+    // setting and getting new object with its properties
     const newNote = {
       title: req.body.title,
       text: req.body.text,
       id: uniqueID
     };
+    // adding new note object to json file
     dbJson.push(newNote);
-    console.log(newNote);
+    // writing json file with new object
     fs.writeFileSync("db/db.json",JSON.stringify(dbJson));
     res.json(dbJson);
   });
 
+  // setting up delete route
+
   app.delete('/notes/api/:id', (req, res) => {
-    console.log(req.params.id);
+   // reading json file
     let data = fs.readFileSync("db/db.json", "utf8");
+    //parsing data to be in json format
     const dataJSON =  JSON.parse(data);
+    // filtering data to not contain param id that was send from client
     const newNotes = dataJSON.filter((note) => { 
       return note.id !== req.params.id;
     });
-    console.log(newNotes);
+   // writing newly data without deleted item back to json file
     fs.writeFileSync("db/db.json",JSON.stringify(newNotes));
     res.json("Note deleted.");
   });
